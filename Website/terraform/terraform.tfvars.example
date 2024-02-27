@@ -1,0 +1,12 @@
+// terraform.tfvars
+# domain_name   = "mycoolapp.biz"
+# domain_name_with_www = true
+# hostedzone_id = "ABC1234567890XYZ"
+
+# aws_default_tags = {
+#  Owner       = "your.email@work.com"
+#  Terraform   = "true"
+#  Environment = "Dev"
+#  Department  = "Engineering"
+#  Project     = "Website for Sharing Work"
+#}

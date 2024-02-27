@@ -1,0 +1,24 @@
+{
+  "name": "fn-auth",
+  "version": "0.0.1",
+  "description": "simple auth function for api gateway",
+  "main": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --minify --platform=node --target=node20 --outfile=dist/index.js --external:@aws-sdk/*"
+  },
+  "keywords": ["auth", "api-gateway", "lambda", "template"],
+  "author": {
+    "name": "Engaging Innovation",
+    "url": "https://github.com/EngagingInnovation"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@aws-lambda-powertools/logger": "^1.18.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.133",
+    "@types/node": "^20.11.16",
+    "esbuild": "^0.20.0"
+  }
+}

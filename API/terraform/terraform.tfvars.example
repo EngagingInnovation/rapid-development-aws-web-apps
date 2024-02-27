@@ -1,0 +1,14 @@
+// terraform.tfvars
+# auth_allowed_users = "let@me.in,your.email@work.com"
+
+# domain_name = "api.mycoolapp.biz"
+# hostedzone_id = "ABC1234567890XYZ"
+# cors_allowed_origins = ["http://localhost:3000", "https://www.mycoolapp.biz"]
+
+# aws_default_tags = {
+#   Owner       = "your.email@work.com"
+#   Terraform   = "true"
+#   Environment = "Dev"
+#   Department  = "Engineering"
+#   Project     = "API for Sharing Work"
+# }

@@ -1,0 +1,60 @@
+openapi: "3.0.1"
+info:
+  version: "0.1.0"
+
+paths:
+  /hello:
+    get:
+      summary: hello
+      responses:
+        default:
+          description: "Default response for GET /hello"
+      security:
+        - demo-lambda-auth: []
+      x-amazon-apigateway-integration:
+        $ref: "#/components/x-amazon-apigateway-integrations/hello"
+      operationid: hello
+
+  /{proxy+}:
+    options:
+      responses:
+        default:
+          description: "Default response for OPTIONS /{proxy+}"
+      x-amazon-apigateway-integration:
+        $ref: "#/components/x-amazon-apigateway-integrations/mock"
+      operationid: mock
+
+components:
+  securitySchemes:
+    demo-lambda-auth:
+      type: "apiKey"
+      name: "Authorization"
+      in: "header"
+      x-amazon-apigateway-authorizer:
+        identitySource: "$request.header.Authorization"
+        authorizerUri: ${authorizer_lambda_invoke}
+        authorizerPayloadFormatVersion: "2.0"
+        authorizerResultTtlInSeconds: 300
+        type: "request"
+        enableSimpleResponses: true
+
+  x-amazon-apigateway-integrations:
+    hello:
+      type: "aws_proxy"
+      uri: ${hello_lambda_invoke}
+      httpMethod: "POST"
+      passthroughBehavior: when_no_match
+      contentHandling: CONVERT_TO_TEXT
+      payloadFormatVersion: "2.0"
+
+    mock:
+      type: "mock"
+      integrationResponses:
+        statusCode: "204"
+        responseParameters:
+            method.response.header.Access-Control-Allow-Methods: "'GET,HEAD,OPTIONS,PATCH,POST,PUT'"
+            method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token,X-Apigateway-Header'"
+            method.response.header.Access-Control-Allow-Origin: "'*'"
+        responseTemplates:
+            application/json: "{\"statusCode\": 204}"
+      passthroughBehavior: when_no_match
