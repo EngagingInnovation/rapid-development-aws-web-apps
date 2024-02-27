@@ -1,4 +1,4 @@
-# Rapid Development with Starter Templates for Online Apps
+# Rapid Development Starter Templates for Online Apps
 This guide introduces a set of starter templates designed to streamline the process of web-based project development, deployed to AWS. By leveraging these templates, engineering teams can bypass the repetitive setup tasks and dive straight into what truly matters: innovation! 
 
 ## Why use these templates?
