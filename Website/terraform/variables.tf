@@ -29,10 +29,13 @@ variable "aws_default_tags" {
   }
 }
 
+# If not set, Terraform looks for the environment variable "AWS_PROFILE"
+# in our template, this variable is set during the Make build/deploy process. 
+# The default AWS_PROFILE value is "default", but can be changed in the .makerc file
 variable "aws_profile" {
   type        = string
   description = "AWS profile to use"
-  default     = "default"
+  default     = null
 }
 
 variable "aws_region" {

@@ -1,0 +1,6 @@
+# if you need to use a different AWS Profile
+# step 1 - rename this file to '.makerc'
+# step 2 - set the value of your profile name without quotes
+#
+# if not set, the Make process will use the aws default profile named 'default'
+AWS_PROFILE_ENV:=your-aws-profile

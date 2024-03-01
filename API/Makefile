@@ -1,14 +1,13 @@
-.PHONY: all build deploy destroy terraform_plan build_lambda_js
+AWS_PROFILE_ENV=default
+-include .makerc
 
 all: build deploy
 
-build:
-	$(MAKE) build_lambda_js
-	$(MAKE) terraform_plan
+build: build_js terraform_plan
 
 deploy: terraform/tfplan
-	cd terraform && terraform apply -input=false tfplan 
-	cd terraform && terraform output -json > tfoutput.json
+	cd terraform && AWS_PROFILE=${AWS_PROFILE_ENV} terraform apply -input=false tfplan 
+	cd terraform && AWS_PROFILE=${AWS_PROFILE_ENV} terraform output -json > tfoutput.json
 	rm terraform/tfplan
 
 destroy:
@@ -24,5 +23,8 @@ build_lambda_js: fn-*/package.json
 		npm run build
 
 terraform_plan: terraform/*.tf
-	cd terraform && terraform init -input=false
-	cd terraform && terraform plan -out=tfplan -input=false
+	cd terraform && AWS_PROFILE=${AWS_PROFILE_ENV} terraform init -input=false
+	cd terraform && AWS_PROFILE=${AWS_PROFILE_ENV} terraform plan -out=tfplan -input=false
+
+
+.PHONY: all build deploy destroy terraform_plan build_lambda_js

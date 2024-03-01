@@ -26,7 +26,6 @@ function App() {
                     className="flex items-center justify-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline border-2 border-blue-700 hover:border-blue-500 mr-2 leading-none"
                 >
                     DateTime Button
-                    <svg viewBox="0 0 24 24"></svg>
                 </button>
 
                 <button

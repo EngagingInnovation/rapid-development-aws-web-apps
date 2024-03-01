@@ -1,5 +1,8 @@
 .DS_Store
 
+### MAKE
+.makerc
+
 ### 
 # TERRAFORM 
 #
