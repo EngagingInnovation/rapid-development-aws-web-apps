@@ -26,7 +26,7 @@ destroy:
 	--profile ${AWS_PROFILE_ENV} \
   	--output=json \
   	--query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}' | jq '. + {"Quiet": true}')"
-	cd terraform && terraform apply -destroy
+	cd terraform && AWS_PROFILE=${AWS_PROFILE_ENV} terraform apply -destroy
 
 build_js: web/package.json
 	cd web/ && \

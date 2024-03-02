@@ -12,7 +12,7 @@ deploy: terraform/tfplan
 
 destroy:
 	@echo "Destroys this project on AWS. Proceed? [y/N] " && read ans && [ $${ans:-N} = y ]
-	cd terraform && terraform apply -destroy
+	cd terraform && AWS_PROFILE=${AWS_PROFILE_ENV} terraform apply -destroy
 
 build_lambda_js: fn-*/package.json
 	cd fn-api/ && \
