@@ -14,12 +14,14 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayEvent): P
     //logger.info('incoming APIGatewayEventrequest', {request: event});
 
     const currentDate = new Date().toISOString();
+    const color = "#" + Math.floor(Math.random() * 16777215).toString(16);
 
     const returnValue = {
         statusCode: 200,
         body: JSON.stringify({
             message: 'Hello, world!',
-            datetime: currentDate
+            datetime: currentDate,
+            color: color
         }),
         headers: {
             'content-type': 'application/json',
