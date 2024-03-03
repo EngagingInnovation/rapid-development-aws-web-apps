@@ -30,7 +30,7 @@ variable "aws_default_tags" {
 }
 
 # If not set, Terraform looks for the environment variable "AWS_PROFILE"
-# in our template, this variable is set during the Make build/deploy process. 
+# in this project, that env variable is set during the Make build/deploy process. 
 # The default AWS_PROFILE value is "default", but can be changed in the .makerc file
 variable "aws_profile" {
   type        = string
@@ -84,26 +84,6 @@ variable "cloudfront_price_class" {
   type        = string
   description = "CloudFront distribution price class"
   default     = "PriceClass_100" # Only US,Canada,Europe
-}
-
-# All values for the TTL are important when uploading static content that changes
-# https://stackoverflow.com/questions/67845341/cloudfront-s3-etag-possible-for-cloudfront-to-send-updated-s3-object-before-t
-variable "cloudfront_ttl_default" {
-  type        = number
-  description = "The default TTL for the cloudfront cache; 86400 = 24 hours"
-  default     = 86400
-}
-
-variable "cloudfront_ttl_min" {
-  type        = number
-  description = "The minimum TTL for the cloudfront cache"
-  default     = 0
-}
-
-variable "cloudfront_ttl_max" {
-  type        = number
-  description = "The maximum TTL for the cloudfront cache; 31536000 = 1 year"
-  default     = 31536000
 }
 
 variable "s3_bucket_custom_name" {

@@ -1,3 +1,13 @@
+# AWS Managed Caching Policies for CloudFront
+data "aws_cloudfront_cache_policy" "cache-none" {
+  name = "Managed-CachingDisabled"
+}
+
+data "aws_cloudfront_cache_policy" "cache-optimized" {
+  name = "Managed-CachingOptimized"
+}
+
+
 resource "aws_cloudfront_distribution" "web" {
   provider = aws.us-east-1
   origin {
@@ -13,48 +23,25 @@ resource "aws_cloudfront_distribution" "web" {
   default_root_object = var.cloudfront_default_root_object
 
   default_cache_behavior {
-    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-    cached_methods   = ["GET", "HEAD", "OPTIONS"]
-    target_origin_id = "S3-OriginID-${aws_s3_bucket.website.id}"
-
-    forwarded_values {
-      query_string = false
-
-      cookies {
-        forward = "none"
-      }
-    }
-
-    min_ttl                = var.cloudfront_ttl_min
-    default_ttl            = var.cloudfront_ttl_default
-    max_ttl                = var.cloudfront_ttl_max
+    allowed_methods        = ["GET", "HEAD", "OPTIONS"]
+    cached_methods         = ["GET", "HEAD", "OPTIONS"]
+    target_origin_id       = "S3-OriginID-${aws_s3_bucket.website.id}"
+    cache_policy_id        = data.aws_cloudfront_cache_policy.cache-optimized.id
     viewer_protocol_policy = "redirect-to-https"
     compress               = true
   }
 
   # because React uses index.html to load the dynamically named content files (css + js), 
-  # we need to set a short TTL on the index.html file, so that we don't have to wait for 
+  # we'r setting a no cache policy on the index.html file, so that we don't have to wait for 
   # the cache to expire before any updates to our website are viewable in the browser
   ordered_cache_behavior {
-    path_pattern     = "/index.html"
-    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-    cached_methods   = ["GET", "HEAD", "OPTIONS"]
-    target_origin_id = "S3-OriginID-${aws_s3_bucket.website.id}"
-
-    forwarded_values {
-      query_string = false
-
-      cookies {
-        forward = "none"
-      }
-    }
-
-    # we still cache index.html, but only for a few seconds
-    min_ttl                = 0
-    default_ttl            = 1
-    max_ttl                = 5
-    compress               = true
+    path_pattern           = "/index.html"
+    allowed_methods        = ["GET", "HEAD", "OPTIONS"]
+    cached_methods         = ["GET", "HEAD", "OPTIONS"]
+    target_origin_id       = "S3-OriginID-${aws_s3_bucket.website.id}"
+    cache_policy_id        = data.aws_cloudfront_cache_policy.cache-none.id
     viewer_protocol_policy = "redirect-to-https"
+    compress               = true
   }
 
   price_class = var.cloudfront_price_class
