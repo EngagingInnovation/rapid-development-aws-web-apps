@@ -70,7 +70,6 @@ resource "aws_cloudfront_distribution" "web" {
     }
   }
 
-
   wait_for_deployment = false
 
   depends_on = [
