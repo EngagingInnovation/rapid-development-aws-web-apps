@@ -37,6 +37,19 @@ If you want to attach a domain name to your website, this can achieved through T
 ### bring your own Hosted Zone 
 If you are building with a domain name, you must first create an AWS Route53 Hosted Zone in your account. This isn't done automatically in this Terraform template. Typically the type of data you need to create a Hosted Zone is coordinated between a domain name registrar and includes Name Space (NS) records that have values that can only be derived from the registrar. AWS has its own registrar, which is pretty convenient. However, if you wanted to create a new domain name with AWS, you have a one-time payment required for the registration which is beyond the scope of this particular starter kit. Once you have the Route53 Hosted Zone Id at the ready, this template project will create the A records and CNAME records as part of the build processes. 
 
+There are ways we could look up the Hosted Zone ID with Terraform. There is a terraform data resource named 'aws_route53_zone' we could  use to find the zone ID by the name. But, we begin to assume a lot about what the Hosted Zone ID might be named. If the template were to get it wrong, Terraform might error out. The goal with this set of templates is to run without the need to modify the `*.tf` files. The best way to meet that goal with the Hosted Zone ID is to ask for it as a user submitted variable instead. 
+
+## Configure
+Each project - API and Website - have some degree of customization built in. The included website code and api server code are just place holders, designed to be replaced with your own custom website or server code. For the resources created on AWS, there are additional configurations that can be made. These include variables like domain names, as discussed above. It also includes variables for tagging and other fine tuned configs for AWS services like S3, Cloudfront, or API Gateway. 
+
+Each project has a directory named 'terraform' and a file within that directory named 'terraform.tfvars.example'. Rename that file to 'terraform.tfvars' and open it in a text editor. Any like that begins with a "#" is a comment. Uncomment the lines that align with variables you would like to change for your app, like this
+
+```hcl
+// terraform/terraform.tfvars
+domain_name   = "mycoolapp.biz"
+hostedzone_id = "ABC1234567890XYZ"
+```
+
 ## Dependencies
 This project is built with the assumption that there are common command line tools already available on your machine or environment. Please ensure that you've installed these dependencies before running this project for the first time.
 

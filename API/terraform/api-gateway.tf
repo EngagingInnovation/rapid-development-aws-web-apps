@@ -1,6 +1,6 @@
 # API Gateway Logs Role/Policy
 resource "aws_iam_role" "api_gateway_cloudwatch" {
-  name = "ApiGatewayCloudWatchRole"
+  name = "ApiGatewayCloudWatchRole${local.app_env}"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -17,7 +17,7 @@ resource "aws_iam_role" "api_gateway_cloudwatch" {
 }
 
 resource "aws_iam_policy" "api_gateway_cloudwatch" {
-  name = "ApiGatewayCloudWatchPolicy"
+  name = "ApiGatewayCloudWatchPolicy${local.app_env}"
 
   policy = jsonencode({
     Version = "2012-10-17"

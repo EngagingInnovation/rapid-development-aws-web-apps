@@ -1,7 +1,7 @@
 # Host React Web Application on AWS Using CloudFront and S3
 
 ## What does this do?
-This template lets us quickly build the AWS resources needed to host a React website. This template is focused on two primary components, an AWS CloudFront resource to handle the HTTP protocols and caching, and an S3 bucket to hold the static web files (HTML, CSS, and Javascript). 
+This template lets us quickly build the AWS resources needed to host a React website. This template is focused on two primary components; an AWS CloudFront resource to handle the HTTP protocols and caching, and an S3 bucket to hold the static web files (HTML, CSS, and Javascript). 
 
 ## What is being created?
 Without any additional configuration, and assuming all the command line [dependencies](../README.md#dependencies) are in place, running the `make` command will create these 4 resources in your AWS account
@@ -30,10 +30,10 @@ Make sure to check the [README in the parent directory](../README.md#custom-doma
 For this template, we are _not_ creating logs. CloudFront does provide a hook for logging. The logs are written to an S3 bucket. There isn't a convenient way to read these files in real-time without creating a lot of additional component parts. For a development or testing phase, a system could be built that forwards the logs from S3 into a CloudWatch Logging group, in which the logs could then be read and searched conveniently. Once a project gets into a production stage, often there are enterprise systems like Splunk, Data Dog or other observability tools that come into play. 
 
 ## How To
-Once you have downloaded this template to your local workspace, and have confirmed you have the proper command line tools in place, we're ready to run this! 
+Once you have downloaded this template to your local workspace, and have confirmed you have the proper command line tools in place, we're ready to run this! Using the Command Line / Terminal application on your computer, locate the this directory (specifically the one that includes the Makefile) and you can execute the following commands.
 
 ### build
-Run `make build` from the same directory as the Makefile to compile the React website and to run the initial Terraform commands. Terraform checks for an existing state file, with the current infrastructure state on AWS, and creates a plan for the resources that need to be added, modified or deleted. The React build compiles the components into web optimized files, complete with proper linking between files. 
+Run `make build` to compile the React website and to run the initial Terraform commands. Terraform checks for an existing state file, with the current infrastructure state on AWS, and creates a plan for the resources that need to be added, modified or deleted. The React build compiles the components into web optimized files, complete with proper linking between files. 
 
 ### deploy
 Run `make deploy` to execute the Terraform plan, which updates the AWS environment according to the plan created in the 'build' phase. This deploy step also pushes the React web files into the S3 bucket
@@ -47,5 +47,3 @@ Run `make destroy` to remove all resources from AWS. This step empties the S3 bu
 ### local web development
 Run `cd web`, followed by `npm run start` to test your React website from localhost during development. 
 
-## Similar Project
-Some of the terraform resources were inspired by [this project](https://github.com/joshuamkite/terraform-aws-static-website-s3-cloudfront-acm/tree/main) on GitHub. A lot was changed for this project, including a new CloudFront ordered cache setting for React and configuration with Route53 domains and hosted zones. 

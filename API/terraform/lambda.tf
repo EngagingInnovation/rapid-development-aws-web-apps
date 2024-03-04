@@ -14,7 +14,7 @@ data "archive_file" "lambda_auth_zip" {
 # Lambda Role + Policies + Code
 # Role
 resource "aws_iam_role" "lambda_api_role" {
-  name = "LambdaAPIRole"
+  name = "LambdaAPIRole${local.app_env}"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -55,7 +55,7 @@ resource "aws_iam_role_policy" "lambda_api_role_policy" {
 
 # Lambda: Content for API
 resource "aws_lambda_function" "fn_api" {
-  function_name = var.lambda_api_name
+  function_name = "${var.lambda_api_name}-${local.app_env}"
   handler       = "index.handler"
   runtime       = "nodejs20.x"
   role          = aws_iam_role.lambda_api_role.arn
@@ -69,7 +69,7 @@ resource "aws_lambda_function" "fn_api" {
 
 # Lambda: Auth for API
 resource "aws_lambda_function" "fn_auth" {
-  function_name = var.lambda_auth_name
+  function_name = "${var.lambda_auth_name}-${local.app_env}"
   handler       = "index.handler"
   runtime       = "nodejs20.x"
   role          = aws_iam_role.lambda_api_role.arn
@@ -89,11 +89,11 @@ resource "aws_lambda_function" "fn_auth" {
 
 # CloudWatch Log Groups
 resource "aws_cloudwatch_log_group" "lambda_logs_api" {
-  name              = "/aws/lambda/${var.lambda_api_name}"
+  name              = "/aws/lambda/${var.lambda_api_name}-${local.app_env}"
   retention_in_days = 30
 }
 
 resource "aws_cloudwatch_log_group" "lambda_log_auth" {
-  name              = "/aws/lambda/${var.lambda_auth_name}"
+  name              = "/aws/lambda/${var.lambda_auth_name}-${local.app_env}"
   retention_in_days = 30
 }

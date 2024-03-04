@@ -24,5 +24,6 @@ resource "random_id" "id" {
 
 locals {
   api_name         = var.domain_name != "" ? "${var.domain_name}" : "api-${random_id.id.hex}"
+  app_env          = contains(keys(var.aws_default_tags), "Environment") ? var.aws_default_tags.Environment : "${random_id.id.hex}"
   parent_directory = abspath("${dirname(path.module)}/..")
 }
